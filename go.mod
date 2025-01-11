@@ -1,4 +1,4 @@
-module librarychain
+module github.com/anvisimi/librarychain
 
 go 1.22.7
 
