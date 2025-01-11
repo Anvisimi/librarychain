@@ -79,6 +79,11 @@ import (
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	"librarychain/docs"
+
+
+	  "github.com/anvisimi/librarychain/x/librarychain"
+      librarychainkeeper "github.com/anvisimi/librarychain/x/librarychain/keeper"
+      librarychaintypes "github.com/anvisimi/librarychain/x/librarychain/types"
 )
 
 const (
@@ -417,4 +422,21 @@ func BlockedAddresses() map[string]bool {
 		}
 	}
 	return result
+}
+
+func (app *App) ModuleBasics() []module.AppModuleBasic {
+  return []module.AppModuleBasic{
+    // other modules...
+    librarychain.AppModuleBasic{},
+  }
+}
+
+func (app *App) RegisterAPIRoutes(apiSvr *api.Server, apiConfig config.APIConfig) {
+  // other routes...
+  librarychain.RegisterGRPCGatewayRoutes(apiSvr.ClientCtx, apiSvr.GRPCGatewayRouter)
+}
+
+func (app *App) InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
+  // other initializations...
+  app.mm.InitGenesis(ctx, app.appCodec, genesisState)
 }

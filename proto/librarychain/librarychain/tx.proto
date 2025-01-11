@@ -1,4 +1,5 @@
 syntax = "proto3";
+
 package librarychain.librarychain;
 
 import "amino/amino.proto";
@@ -6,35 +7,71 @@ import "cosmos/msg/v1/msg.proto";
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 import "librarychain/librarychain/params.proto";
+import "librarychain/librarychain/book.proto";
+import "google/api/annotations.proto";
 
 option go_package = "librarychain/x/librarychain/types";
 
 // Msg defines the Msg service.
 service Msg {
   option (cosmos.msg.v1.service) = true;
-
+  
   // UpdateParams defines a (governance) operation for updating the module
   // parameters. The authority defaults to the x/gov module account.
-  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+  rpc UpdateParams (MsgUpdateParams) returns (MsgUpdateParamsResponse);
+  rpc CreateBook(MsgCreateBook) returns (MsgCreateBookResponse) {
+    option (google.api.http) = {
+      post: "/librarychain.librarychain.Msg/CreateBook"
+      body: "*"
+    };
+  }
+  rpc UpdateBook   (MsgUpdateBook  ) returns (MsgUpdateBookResponse  );
+  rpc DeleteBook   (MsgDeleteBook  ) returns (MsgDeleteBookResponse  );
 }
-
 // MsgUpdateParams is the Msg/UpdateParams request type.
 message MsgUpdateParams {
-  option (cosmos.msg.v1.signer) = "authority";
-  option (amino.name) = "librarychain/x/librarychain/MsgUpdateParams";
-
+  option (cosmos.msg.v1.signer) =                                   "authority";
+  option           (amino.name) = "librarychain/x/librarychain/MsgUpdateParams";
+  
   // authority is the address that controls the module (defaults to x/gov unless overwritten).
   string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
-
+  
   // params defines the module parameters to update.
-  //
+  
   // NOTE: All parameters must be supplied.
-  Params params = 2 [
-    (gogoproto.nullable) = false,
-    (amino.dont_omitempty) = true
-  ];
+  Params params = 2 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
 }
 
 // MsgUpdateParamsResponse defines the response structure for executing a
 // MsgUpdateParams message.
 message MsgUpdateParamsResponse {}
+
+message MsgCreateBook {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+  string title   = 2;
+  string author  = 3;
+}
+
+message MsgCreateBookResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateBook {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+  uint64 id      = 2;
+  string title   = 3;
+  string author  = 4;
+}
+
+message MsgUpdateBookResponse {}
+
+message MsgDeleteBook {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1;
+  uint64 id      = 2;
+}
+
+message MsgDeleteBookResponse {}
+

@@ -23,7 +23,19 @@ var (
 )
 
 const (
-// this line is used by starport scaffolding # simapp/module/const
+	opWeightMsgCreateBook = "op_weight_msg_book"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateBook int = 100
+
+	opWeightMsgUpdateBook = "op_weight_msg_book"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateBook int = 100
+
+	opWeightMsgDeleteBook = "op_weight_msg_book"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteBook int = 100
+
+	// this line is used by starport scaffolding # simapp/module/const
 )
 
 // GenerateGenesisState creates a randomized GenState of the module.
@@ -34,6 +46,17 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 	}
 	librarychainGenesis := types.GenesisState{
 		Params: types.DefaultParams(),
+		BookList: []types.Book{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		BookCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&librarychainGenesis)
@@ -46,6 +69,39 @@ func (am AppModule) RegisterStoreDecoder(_ simtypes.StoreDecoderRegistry) {}
 func (am AppModule) WeightedOperations(simState module.SimulationState) []simtypes.WeightedOperation {
 	operations := make([]simtypes.WeightedOperation, 0)
 
+	var weightMsgCreateBook int
+	simState.AppParams.GetOrGenerate(opWeightMsgCreateBook, &weightMsgCreateBook, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateBook = defaultWeightMsgCreateBook
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateBook,
+		librarychainsimulation.SimulateMsgCreateBook(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateBook int
+	simState.AppParams.GetOrGenerate(opWeightMsgUpdateBook, &weightMsgUpdateBook, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateBook = defaultWeightMsgUpdateBook
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateBook,
+		librarychainsimulation.SimulateMsgUpdateBook(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteBook int
+	simState.AppParams.GetOrGenerate(opWeightMsgDeleteBook, &weightMsgDeleteBook, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteBook = defaultWeightMsgDeleteBook
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteBook,
+		librarychainsimulation.SimulateMsgDeleteBook(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -54,6 +110,30 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 // ProposalMsgs returns msgs used for governance proposals for simulations.
 func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.WeightedProposalMsg {
 	return []simtypes.WeightedProposalMsg{
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgCreateBook,
+			defaultWeightMsgCreateBook,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				librarychainsimulation.SimulateMsgCreateBook(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgUpdateBook,
+			defaultWeightMsgUpdateBook,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				librarychainsimulation.SimulateMsgUpdateBook(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgDeleteBook,
+			defaultWeightMsgDeleteBook,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				librarychainsimulation.SimulateMsgDeleteBook(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
 		// this line is used by starport scaffolding # simapp/module/OpMsg
 	}
 }

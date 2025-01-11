@@ -6,19 +6,19 @@ package types
 import (
 	context "context"
 	fmt "fmt"
-	io "io"
-	math "math"
-	math_bits "math/bits"
-
 	_ "github.com/cosmos/cosmos-proto"
 	_ "github.com/cosmos/cosmos-sdk/types/msgservice"
 	_ "github.com/cosmos/cosmos-sdk/types/tx/amino"
 	_ "github.com/cosmos/gogoproto/gogoproto"
 	grpc1 "github.com/cosmos/gogoproto/grpc"
 	proto "github.com/cosmos/gogoproto/proto"
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	io "io"
+	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -36,8 +36,6 @@ const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 type MsgUpdateParams struct {
 	// authority is the address that controls the module (defaults to x/gov unless overwritten).
 	Authority string `protobuf:"bytes,1,opt,name=authority,proto3" json:"authority,omitempty"`
-	// params defines the module parameters to update.
-	//
 	// NOTE: All parameters must be supplied.
 	Params Params `protobuf:"bytes,2,opt,name=params,proto3" json:"params"`
 }
@@ -127,9 +125,311 @@ func (m *MsgUpdateParamsResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_MsgUpdateParamsResponse proto.InternalMessageInfo
 
+type MsgCreateBook struct {
+	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Title   string `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Author  string `protobuf:"bytes,3,opt,name=author,proto3" json:"author,omitempty"`
+}
+
+func (m *MsgCreateBook) Reset()         { *m = MsgCreateBook{} }
+func (m *MsgCreateBook) String() string { return proto.CompactTextString(m) }
+func (*MsgCreateBook) ProtoMessage()    {}
+func (*MsgCreateBook) Descriptor() ([]byte, []int) {
+	return fileDescriptor_efe878e617ce3a7c, []int{2}
+}
+func (m *MsgCreateBook) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgCreateBook) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgCreateBook.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgCreateBook) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgCreateBook.Merge(m, src)
+}
+func (m *MsgCreateBook) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgCreateBook) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgCreateBook.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgCreateBook proto.InternalMessageInfo
+
+func (m *MsgCreateBook) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgCreateBook) GetTitle() string {
+	if m != nil {
+		return m.Title
+	}
+	return ""
+}
+
+func (m *MsgCreateBook) GetAuthor() string {
+	if m != nil {
+		return m.Author
+	}
+	return ""
+}
+
+type MsgCreateBookResponse struct {
+	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (m *MsgCreateBookResponse) Reset()         { *m = MsgCreateBookResponse{} }
+func (m *MsgCreateBookResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgCreateBookResponse) ProtoMessage()    {}
+func (*MsgCreateBookResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_efe878e617ce3a7c, []int{3}
+}
+func (m *MsgCreateBookResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgCreateBookResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgCreateBookResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgCreateBookResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgCreateBookResponse.Merge(m, src)
+}
+func (m *MsgCreateBookResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgCreateBookResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgCreateBookResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgCreateBookResponse proto.InternalMessageInfo
+
+func (m *MsgCreateBookResponse) GetId() uint64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+type MsgUpdateBook struct {
+	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Id      uint64 `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
+	Title   string `protobuf:"bytes,3,opt,name=title,proto3" json:"title,omitempty"`
+	Author  string `protobuf:"bytes,4,opt,name=author,proto3" json:"author,omitempty"`
+}
+
+func (m *MsgUpdateBook) Reset()         { *m = MsgUpdateBook{} }
+func (m *MsgUpdateBook) String() string { return proto.CompactTextString(m) }
+func (*MsgUpdateBook) ProtoMessage()    {}
+func (*MsgUpdateBook) Descriptor() ([]byte, []int) {
+	return fileDescriptor_efe878e617ce3a7c, []int{4}
+}
+func (m *MsgUpdateBook) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgUpdateBook) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgUpdateBook.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgUpdateBook) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgUpdateBook.Merge(m, src)
+}
+func (m *MsgUpdateBook) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgUpdateBook) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgUpdateBook.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgUpdateBook proto.InternalMessageInfo
+
+func (m *MsgUpdateBook) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgUpdateBook) GetId() uint64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+func (m *MsgUpdateBook) GetTitle() string {
+	if m != nil {
+		return m.Title
+	}
+	return ""
+}
+
+func (m *MsgUpdateBook) GetAuthor() string {
+	if m != nil {
+		return m.Author
+	}
+	return ""
+}
+
+type MsgUpdateBookResponse struct {
+}
+
+func (m *MsgUpdateBookResponse) Reset()         { *m = MsgUpdateBookResponse{} }
+func (m *MsgUpdateBookResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgUpdateBookResponse) ProtoMessage()    {}
+func (*MsgUpdateBookResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_efe878e617ce3a7c, []int{5}
+}
+func (m *MsgUpdateBookResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgUpdateBookResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgUpdateBookResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgUpdateBookResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgUpdateBookResponse.Merge(m, src)
+}
+func (m *MsgUpdateBookResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgUpdateBookResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgUpdateBookResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgUpdateBookResponse proto.InternalMessageInfo
+
+type MsgDeleteBook struct {
+	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Id      uint64 `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (m *MsgDeleteBook) Reset()         { *m = MsgDeleteBook{} }
+func (m *MsgDeleteBook) String() string { return proto.CompactTextString(m) }
+func (*MsgDeleteBook) ProtoMessage()    {}
+func (*MsgDeleteBook) Descriptor() ([]byte, []int) {
+	return fileDescriptor_efe878e617ce3a7c, []int{6}
+}
+func (m *MsgDeleteBook) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDeleteBook) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDeleteBook.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDeleteBook) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDeleteBook.Merge(m, src)
+}
+func (m *MsgDeleteBook) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDeleteBook) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDeleteBook.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDeleteBook proto.InternalMessageInfo
+
+func (m *MsgDeleteBook) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgDeleteBook) GetId() uint64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+type MsgDeleteBookResponse struct {
+}
+
+func (m *MsgDeleteBookResponse) Reset()         { *m = MsgDeleteBookResponse{} }
+func (m *MsgDeleteBookResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgDeleteBookResponse) ProtoMessage()    {}
+func (*MsgDeleteBookResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_efe878e617ce3a7c, []int{7}
+}
+func (m *MsgDeleteBookResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgDeleteBookResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgDeleteBookResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgDeleteBookResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgDeleteBookResponse.Merge(m, src)
+}
+func (m *MsgDeleteBookResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgDeleteBookResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgDeleteBookResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgDeleteBookResponse proto.InternalMessageInfo
+
 func init() {
 	proto.RegisterType((*MsgUpdateParams)(nil), "librarychain.librarychain.MsgUpdateParams")
 	proto.RegisterType((*MsgUpdateParamsResponse)(nil), "librarychain.librarychain.MsgUpdateParamsResponse")
+	proto.RegisterType((*MsgCreateBook)(nil), "librarychain.librarychain.MsgCreateBook")
+	proto.RegisterType((*MsgCreateBookResponse)(nil), "librarychain.librarychain.MsgCreateBookResponse")
+	proto.RegisterType((*MsgUpdateBook)(nil), "librarychain.librarychain.MsgUpdateBook")
+	proto.RegisterType((*MsgUpdateBookResponse)(nil), "librarychain.librarychain.MsgUpdateBookResponse")
+	proto.RegisterType((*MsgDeleteBook)(nil), "librarychain.librarychain.MsgDeleteBook")
+	proto.RegisterType((*MsgDeleteBookResponse)(nil), "librarychain.librarychain.MsgDeleteBookResponse")
 }
 
 func init() {
@@ -137,28 +437,42 @@ func init() {
 }
 
 var fileDescriptor_efe878e617ce3a7c = []byte{
-	// 322 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x52, 0xca, 0xc9, 0x4c, 0x2a,
-	0x4a, 0x2c, 0xaa, 0x4c, 0xce, 0x48, 0xcc, 0xcc, 0xd3, 0x47, 0xe1, 0x94, 0x54, 0xe8, 0x15, 0x14,
-	0xe5, 0x97, 0xe4, 0x0b, 0x49, 0x22, 0x0b, 0xeb, 0x21, 0x73, 0xa4, 0x04, 0x13, 0x73, 0x33, 0xf3,
-	0xf2, 0xf5, 0xc1, 0x24, 0x44, 0xb5, 0x94, 0x78, 0x72, 0x7e, 0x71, 0x6e, 0x7e, 0xb1, 0x7e, 0x6e,
-	0x71, 0xba, 0x7e, 0x99, 0x21, 0x88, 0x82, 0x4a, 0x48, 0x42, 0x24, 0xe2, 0xc1, 0x3c, 0x7d, 0x08,
-	0x07, 0x2a, 0x25, 0x92, 0x9e, 0x9f, 0x9e, 0x0f, 0x11, 0x07, 0xb1, 0xa0, 0xa2, 0x6a, 0xb8, 0xdd,
-	0x56, 0x90, 0x58, 0x94, 0x98, 0x0b, 0xd5, 0xad, 0x74, 0x9e, 0x91, 0x8b, 0xdf, 0xb7, 0x38, 0x3d,
-	0xb4, 0x20, 0x25, 0xb1, 0x24, 0x35, 0x00, 0x2c, 0x23, 0x64, 0xc6, 0xc5, 0x99, 0x58, 0x5a, 0x92,
-	0x91, 0x5f, 0x94, 0x59, 0x52, 0x29, 0xc1, 0xa8, 0xc0, 0xa8, 0xc1, 0xe9, 0x24, 0x71, 0x69, 0x8b,
-	0xae, 0x08, 0xd4, 0x5a, 0xc7, 0x94, 0x94, 0xa2, 0xd4, 0xe2, 0xe2, 0xe0, 0x92, 0xa2, 0xcc, 0xbc,
-	0xf4, 0x20, 0x84, 0x52, 0x21, 0x17, 0x2e, 0x36, 0x88, 0xd9, 0x12, 0x4c, 0x0a, 0x8c, 0x1a, 0xdc,
-	0x46, 0x8a, 0x7a, 0x38, 0x3d, 0xaf, 0x07, 0xb1, 0xca, 0x89, 0xf3, 0xc4, 0x3d, 0x79, 0x86, 0x15,
-	0xcf, 0x37, 0x68, 0x31, 0x06, 0x41, 0xf5, 0x5a, 0xd9, 0x35, 0x3d, 0xdf, 0xa0, 0x85, 0x30, 0xb5,
-	0xeb, 0xf9, 0x06, 0x2d, 0x6d, 0x14, 0xf7, 0x57, 0xa0, 0x7a, 0x07, 0xcd, 0xf5, 0x4a, 0x92, 0x5c,
-	0xe2, 0x68, 0x42, 0x41, 0xa9, 0xc5, 0x05, 0xf9, 0x79, 0xc5, 0xa9, 0x46, 0x35, 0x5c, 0xcc, 0xbe,
-	0xc5, 0xe9, 0x42, 0x79, 0x5c, 0x3c, 0x28, 0xfe, 0xd5, 0xc2, 0xe3, 0x4e, 0x34, 0xa3, 0xa4, 0x8c,
-	0x88, 0x57, 0x0b, 0xb3, 0x56, 0x8a, 0xb5, 0x01, 0xe4, 0x41, 0x27, 0xeb, 0x13, 0x8f, 0xe4, 0x18,
-	0x2f, 0x3c, 0x92, 0x63, 0x7c, 0xf0, 0x48, 0x8e, 0x71, 0xc2, 0x63, 0x39, 0x86, 0x0b, 0x8f, 0xe5,
-	0x18, 0x6e, 0x3c, 0x96, 0x63, 0x88, 0x52, 0xc4, 0xe7, 0xbf, 0x92, 0xca, 0x82, 0xd4, 0xe2, 0x24,
-	0x36, 0x70, 0x74, 0x19, 0x03, 0x02, 0x00, 0x00, 0xff, 0xff, 0x0e, 0x27, 0xb4, 0xdb, 0x74, 0x02,
-	0x00, 0x00,
+	// 554 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x94, 0xc1, 0x8f, 0xd2, 0x4e,
+	0x14, 0xc7, 0x19, 0xd8, 0xe5, 0x17, 0xe6, 0xb7, 0x6a, 0x6c, 0x50, 0xa0, 0x31, 0x75, 0xb7, 0x31,
+	0x8a, 0x35, 0xb6, 0x8a, 0xc6, 0x03, 0x26, 0x26, 0xe2, 0x26, 0x9e, 0x48, 0x4c, 0x8d, 0x17, 0x2f,
+	0x66, 0xa0, 0x93, 0x32, 0x59, 0xe8, 0x34, 0x9d, 0x59, 0xb3, 0xdc, 0xcc, 0x1e, 0x3d, 0x99, 0x78,
+	0xf7, 0xec, 0x91, 0x83, 0x7f, 0xc4, 0xde, 0xdc, 0xe8, 0xc5, 0x93, 0x31, 0x60, 0xc2, 0xd9, 0xff,
+	0xc0, 0x74, 0xa6, 0xa5, 0x2d, 0xbb, 0x14, 0xbc, 0x00, 0xef, 0xcd, 0x7b, 0xef, 0xfb, 0x79, 0xef,
+	0xcd, 0x00, 0xf5, 0x21, 0xe9, 0x05, 0x28, 0x18, 0xf7, 0x07, 0x88, 0x78, 0x56, 0xc6, 0xe0, 0x47,
+	0xa6, 0x1f, 0x50, 0x4e, 0x95, 0x46, 0xda, 0x6d, 0xa6, 0x0d, 0xf5, 0x32, 0x1a, 0x11, 0x8f, 0x5a,
+	0xe2, 0x53, 0x46, 0xab, 0xb5, 0x3e, 0x65, 0x23, 0xca, 0xac, 0x11, 0x73, 0xad, 0xb7, 0xf7, 0xc3,
+	0xaf, 0xe8, 0xa0, 0x21, 0x0f, 0xde, 0x08, 0xcb, 0x92, 0x46, 0x74, 0x54, 0x75, 0xa9, 0x4b, 0xa5,
+	0x3f, 0xfc, 0x15, 0x79, 0x6f, 0xae, 0x66, 0xf3, 0x51, 0x80, 0x46, 0x71, 0xf6, 0x8d, 0xd5, 0x71,
+	0x3d, 0x4a, 0x0f, 0xa2, 0xa8, 0x6b, 0x2e, 0xa5, 0xee, 0x10, 0x5b, 0xc8, 0x27, 0x16, 0xf2, 0x3c,
+	0xca, 0x11, 0x27, 0xd4, 0x8b, 0x6a, 0xe8, 0x5f, 0x01, 0xbc, 0xd4, 0x65, 0xee, 0x2b, 0xdf, 0x41,
+	0x1c, 0xbf, 0x10, 0xd5, 0x95, 0x47, 0xb0, 0x82, 0x0e, 0xf9, 0x80, 0x06, 0x84, 0x8f, 0xeb, 0x60,
+	0x17, 0x34, 0x2b, 0x9d, 0xfa, 0xb7, 0x2f, 0x77, 0xab, 0x11, 0xfa, 0x53, 0xc7, 0x09, 0x30, 0x63,
+	0x2f, 0x79, 0x40, 0x3c, 0xd7, 0x4e, 0x42, 0x95, 0x7d, 0x58, 0x96, 0x7c, 0xf5, 0xe2, 0x2e, 0x68,
+	0xfe, 0xdf, 0xda, 0x33, 0x57, 0x0e, 0xd0, 0x94, 0x52, 0x9d, 0xca, 0xc9, 0xcf, 0xeb, 0x85, 0xcf,
+	0xf3, 0x89, 0x01, 0xec, 0x28, 0xb7, 0xfd, 0xe4, 0x78, 0x3e, 0x31, 0x92, 0xaa, 0xef, 0xe7, 0x13,
+	0xe3, 0x4e, 0xa6, 0xb7, 0xa3, 0x6c, 0xab, 0x4b, 0xf4, 0x7a, 0x03, 0xd6, 0x96, 0x5c, 0x36, 0x66,
+	0x3e, 0xf5, 0x18, 0xd6, 0x31, 0xbc, 0xd0, 0x65, 0xee, 0xb3, 0x00, 0x23, 0x8e, 0x3b, 0x94, 0x1e,
+	0x28, 0x75, 0xf8, 0x5f, 0x3f, 0xb4, 0x68, 0x20, 0xfb, 0xb4, 0x63, 0x53, 0xa9, 0xc2, 0x6d, 0x4e,
+	0xf8, 0x10, 0x8b, 0x56, 0x2a, 0xb6, 0x34, 0x94, 0xab, 0xb0, 0x2c, 0xc1, 0xea, 0x25, 0xe1, 0x8e,
+	0xac, 0xf6, 0x4e, 0xc8, 0x1c, 0xe7, 0xea, 0xb7, 0xe0, 0x95, 0x8c, 0x4c, 0xac, 0xaf, 0x5c, 0x84,
+	0x45, 0xe2, 0x08, 0xa5, 0x2d, 0xbb, 0x48, 0x1c, 0xfd, 0x50, 0xf0, 0x48, 0xd4, 0x35, 0x3c, 0x32,
+	0xb5, 0x18, 0xa7, 0x26, 0x7c, 0xa5, 0xf3, 0xf9, 0xb6, 0x72, 0xf8, 0x6a, 0x82, 0x2f, 0x91, 0x5d,
+	0xcc, 0xe7, 0xb9, 0xe0, 0xd9, 0xc7, 0x43, 0xfc, 0xaf, 0x3c, 0xe7, 0x2a, 0x24, 0x85, 0x62, 0x85,
+	0xd6, 0x9f, 0x12, 0x2c, 0x75, 0x99, 0xab, 0x78, 0x70, 0x27, 0x73, 0xe5, 0x8c, 0x9c, 0xab, 0xb2,
+	0xb4, 0x4d, 0xb5, 0xb5, 0x79, 0xec, 0x62, 0xf2, 0x9f, 0x00, 0x84, 0xa9, 0xbd, 0x37, 0xf3, 0x4b,
+	0x24, 0x91, 0xea, 0xbd, 0x4d, 0x23, 0x17, 0x43, 0x7c, 0x78, 0xfc, 0xfd, 0xf7, 0xc7, 0xa2, 0xd9,
+	0x06, 0x86, 0x7e, 0xdb, 0xca, 0x4d, 0xb6, 0x52, 0x44, 0x03, 0x08, 0x53, 0xf7, 0xa0, 0xb9, 0x49,
+	0x8b, 0x9b, 0xf0, 0x9d, 0x5d, 0x72, 0xa8, 0x94, 0xda, 0xf0, 0x1a, 0xa5, 0x24, 0x72, 0x9d, 0xd2,
+	0xd9, 0x65, 0xab, 0xdb, 0xef, 0xc2, 0x87, 0xdd, 0x79, 0x7c, 0x32, 0xd5, 0xc0, 0xe9, 0x54, 0x03,
+	0xbf, 0xa6, 0x1a, 0xf8, 0x30, 0xd3, 0x0a, 0xa7, 0x33, 0xad, 0xf0, 0x63, 0xa6, 0x15, 0x5e, 0xef,
+	0xe5, 0xbd, 0x6b, 0x3e, 0xf6, 0x31, 0xeb, 0x95, 0xc5, 0xdf, 0xd4, 0x83, 0xbf, 0x01, 0x00, 0x00,
+	0xff, 0xff, 0x8a, 0xc0, 0x4b, 0x0d, 0xb0, 0x05, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -176,6 +490,9 @@ type MsgClient interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(ctx context.Context, in *MsgUpdateParams, opts ...grpc.CallOption) (*MsgUpdateParamsResponse, error)
+	CreateBook(ctx context.Context, in *MsgCreateBook, opts ...grpc.CallOption) (*MsgCreateBookResponse, error)
+	UpdateBook(ctx context.Context, in *MsgUpdateBook, opts ...grpc.CallOption) (*MsgUpdateBookResponse, error)
+	DeleteBook(ctx context.Context, in *MsgDeleteBook, opts ...grpc.CallOption) (*MsgDeleteBookResponse, error)
 }
 
 type msgClient struct {
@@ -195,11 +512,41 @@ func (c *msgClient) UpdateParams(ctx context.Context, in *MsgUpdateParams, opts 
 	return out, nil
 }
 
+func (c *msgClient) CreateBook(ctx context.Context, in *MsgCreateBook, opts ...grpc.CallOption) (*MsgCreateBookResponse, error) {
+	out := new(MsgCreateBookResponse)
+	err := c.cc.Invoke(ctx, "/librarychain.librarychain.Msg/CreateBook", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) UpdateBook(ctx context.Context, in *MsgUpdateBook, opts ...grpc.CallOption) (*MsgUpdateBookResponse, error) {
+	out := new(MsgUpdateBookResponse)
+	err := c.cc.Invoke(ctx, "/librarychain.librarychain.Msg/UpdateBook", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *msgClient) DeleteBook(ctx context.Context, in *MsgDeleteBook, opts ...grpc.CallOption) (*MsgDeleteBookResponse, error) {
+	out := new(MsgDeleteBookResponse)
+	err := c.cc.Invoke(ctx, "/librarychain.librarychain.Msg/DeleteBook", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	// UpdateParams defines a (governance) operation for updating the module
 	// parameters. The authority defaults to the x/gov module account.
 	UpdateParams(context.Context, *MsgUpdateParams) (*MsgUpdateParamsResponse, error)
+	CreateBook(context.Context, *MsgCreateBook) (*MsgCreateBookResponse, error)
+	UpdateBook(context.Context, *MsgUpdateBook) (*MsgUpdateBookResponse, error)
+	DeleteBook(context.Context, *MsgDeleteBook) (*MsgDeleteBookResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -208,6 +555,15 @@ type UnimplementedMsgServer struct {
 
 func (*UnimplementedMsgServer) UpdateParams(ctx context.Context, req *MsgUpdateParams) (*MsgUpdateParamsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateParams not implemented")
+}
+func (*UnimplementedMsgServer) CreateBook(ctx context.Context, req *MsgCreateBook) (*MsgCreateBookResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateBook not implemented")
+}
+func (*UnimplementedMsgServer) UpdateBook(ctx context.Context, req *MsgUpdateBook) (*MsgUpdateBookResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateBook not implemented")
+}
+func (*UnimplementedMsgServer) DeleteBook(ctx context.Context, req *MsgDeleteBook) (*MsgDeleteBookResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteBook not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -232,6 +588,60 @@ func _Msg_UpdateParams_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CreateBook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCreateBook)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CreateBook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/librarychain.librarychain.Msg/CreateBook",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CreateBook(ctx, req.(*MsgCreateBook))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_UpdateBook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgUpdateBook)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).UpdateBook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/librarychain.librarychain.Msg/UpdateBook",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).UpdateBook(ctx, req.(*MsgUpdateBook))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Msg_DeleteBook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgDeleteBook)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).DeleteBook(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/librarychain.librarychain.Msg/DeleteBook",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).DeleteBook(ctx, req.(*MsgDeleteBook))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var Msg_serviceDesc = _Msg_serviceDesc
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "librarychain.librarychain.Msg",
@@ -240,6 +650,18 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateParams",
 			Handler:    _Msg_UpdateParams_Handler,
+		},
+		{
+			MethodName: "CreateBook",
+			Handler:    _Msg_CreateBook_Handler,
+		},
+		{
+			MethodName: "UpdateBook",
+			Handler:    _Msg_UpdateBook_Handler,
+		},
+		{
+			MethodName: "DeleteBook",
+			Handler:    _Msg_DeleteBook_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -309,6 +731,208 @@ func (m *MsgUpdateParamsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error)
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgCreateBook) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgCreateBook) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgCreateBook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Author) > 0 {
+		i -= len(m.Author)
+		copy(dAtA[i:], m.Author)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Author)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Title) > 0 {
+		i -= len(m.Title)
+		copy(dAtA[i:], m.Title)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Title)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgCreateBookResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgCreateBookResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgCreateBookResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Id != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.Id))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgUpdateBook) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgUpdateBook) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgUpdateBook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Author) > 0 {
+		i -= len(m.Author)
+		copy(dAtA[i:], m.Author)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Author)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Title) > 0 {
+		i -= len(m.Title)
+		copy(dAtA[i:], m.Title)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Title)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Id != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.Id))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgUpdateBookResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgUpdateBookResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgUpdateBookResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgDeleteBook) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDeleteBook) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDeleteBook) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Id != 0 {
+		i = encodeVarintTx(dAtA, i, uint64(m.Id))
+		i--
+		dAtA[i] = 0x10
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgDeleteBookResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgDeleteBookResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgDeleteBookResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -336,6 +960,97 @@ func (m *MsgUpdateParams) Size() (n int) {
 }
 
 func (m *MsgUpdateParamsResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgCreateBook) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Title)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Author)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgCreateBookResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Id != 0 {
+		n += 1 + sovTx(uint64(m.Id))
+	}
+	return n
+}
+
+func (m *MsgUpdateBook) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.Id != 0 {
+		n += 1 + sovTx(uint64(m.Id))
+	}
+	l = len(m.Title)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Author)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgUpdateBookResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	return n
+}
+
+func (m *MsgDeleteBook) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	if m.Id != 0 {
+		n += 1 + sovTx(uint64(m.Id))
+	}
+	return n
+}
+
+func (m *MsgDeleteBookResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -492,6 +1207,587 @@ func (m *MsgUpdateParamsResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgUpdateParamsResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgCreateBook) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgCreateBook: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgCreateBook: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Title", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Title = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Author", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Author = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgCreateBookResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgCreateBookResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgCreateBookResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgUpdateBook) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgUpdateBook: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgUpdateBook: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Title", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Title = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Author", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Author = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgUpdateBookResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgUpdateBookResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgUpdateBookResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgDeleteBook) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDeleteBook: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDeleteBook: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			m.Id = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Id |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgDeleteBookResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgDeleteBookResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgDeleteBookResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		default:
